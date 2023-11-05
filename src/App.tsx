@@ -18,7 +18,7 @@ const fetchMessages = async () => {
 const App: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>([]);
 
-  // const { data, isLoading, isError } = useQuery('messages', fetchMessages);
+  // 
 
   // useEffect(() => {
   //     setComments(data);
@@ -71,15 +71,17 @@ const App: React.FC = () => {
         const newComment: Comment = {
           id: uuidv4(),
           author: {
-                name: 'Current User',
-                picture: '/src/assets/react.svg', // Putanja do slike vašeg default avatara
-              },
+            name: 'Current User',
+            picture: '/src/assets/react.svg', // Putanja do slike vašeg default avatara
+          },
           text,
           timestamp: new Date(),
           replies: [],
         };
         setComments([...comments, newComment]);
-      }} />
+      } } onReplySent={function (): void {
+        throw new Error('Function not implemented.');
+      } } />
     </div>
   );
 };
