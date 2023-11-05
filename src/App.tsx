@@ -1,69 +1,85 @@
-import React, { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Message from "./Message";
-import Reply from "./Reply";
-import MyComponent from './MyComponent';
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from 'react-query';
-const queryClient = new QueryClient();
+import React, { useEffect, useState } from 'react';
+import CommentComponent from './components/Comment';
+import ReplyForm from './components/ReplyForm';
+import { Comment } from './types';
+import { v4 as uuidv4 } from 'uuid';
+import { useQuery } from 'react-query';
 
-interface MessageData {
-  id: string;
-  author: {
-    name: string;
-    picture: string;
-  };
-  text: string;
-}
 
-interface ReplyData extends MessageData {
-  parentId: string;
-}
+const fetchMessages = async () => {
+  const response = await fetch('http://localhost:3100/api/messages');
+  if (!response.ok) {
+    throw new Error('Failed to fetch messages');
+    
+  }
+  return response.json();
+};
 
 const App: React.FC = () => {
-  const [messages, setMessages] = useState<MessageData[]>([]);
-  const [newMessage, setNewMessage] = useState<string>("");
+  const [comments, setComments] = useState<Comment[]>([]);
 
-  const handleAddMessage = () => {
-    // Simulirajte slanje nove poruke na server
-    const newMessageData: MessageData = {
-      id: (messages.length + 1).toString(),
-      author: {
-        name: "Novi Autor",
-        picture: "img/novi.jpg",
-      },
-      text: newMessage,
-    };
+  // const { data, isLoading, isError } = useQuery('messages', fetchMessages);
 
-    setMessages([...messages, newMessageData]);
-    setNewMessage("");
+  // useEffect(() => {
+  //     setComments(data);
+  // }, [data]);
+
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // if (isError) {
+  //   return <div>Error fetching messages</div>;
+  // }
+
+   
+
+  const addReply = (text: string, parentId: string) => {
+    setComments(currentComments => {
+      const addReplyToComment = (comments: Comment[], text: string, parentId: string): Comment[] => {
+        return comments.map(comment => {
+          if (comment.id === parentId) {
+            const newReply: Comment = {
+              id: uuidv4(),
+              author: {
+                name: 'Current User',
+                picture: '/src/assets/react.svg', // Putanja do slike vašeg default avatara
+              },
+              text,
+              timestamp: new Date(),
+            };
+            return { ...comment, replies: [...(comment.replies || []), newReply] };
+          }
+          if (comment.replies) {
+            return { ...comment, replies: addReplyToComment(comment.replies, text, parentId) };
+          }
+          return comment;
+        });
+      };
+
+      return addReplyToComment(currentComments, text, parentId);
+    });
   };
 
-
+  // Render the comments and the form to add new comments at the same level
   return (
-    <div className="app">
-      <QueryClientProvider client={queryClient}><MyComponent></MyComponent></QueryClientProvider>
-      
-      <div className="messages-container">
-        {messages.map((message) => (
-          <Message key={message.id} message={message} />
-        ))}
-      </div>
-
-      <div className="message-input">
-        <input
-          type="text"
-          placeholder="Unesite novu poruku..."
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-        />
-        <button onClick={handleAddMessage}>Pošalji</button>
-      </div>
+    <div className="container mx-auto p-4">
+      {comments.map(comment => (
+        <CommentComponent key={comment.id} comment={comment} addReply={addReply} />
+      ))}
+      <ReplyForm parentId="" addReply={(text, parentId) => {
+        const newComment: Comment = {
+          id: uuidv4(),
+          author: {
+                name: 'Current User',
+                picture: '/src/assets/react.svg', // Putanja do slike vašeg default avatara
+              },
+          text,
+          timestamp: new Date(),
+          replies: [],
+        };
+        setComments([...comments, newComment]);
+      }} />
     </div>
   );
 };

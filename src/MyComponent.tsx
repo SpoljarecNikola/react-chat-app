@@ -1,7 +1,9 @@
+import { useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 
 interface Message {
   id: string;
+  parentId?: string;
   author: string;
   text: string;
   timestamp: string;
@@ -18,6 +20,9 @@ const fetchMessages = async () => {
 
  function MyComponent() {
   const { data, isLoading, isError } = useQuery('messages', fetchMessages);
+
+  const [comments, setComments] = useState([])
+  
   if (isLoading) {
     return <div>Loading...</div>;
   }
