@@ -3,12 +3,14 @@ import arrowSrc from "../assets/arrow.svg";
 
 interface ReplyFormProps {
   parentId: string;
-  addReply: (text: string, parentId: string) => void;
+  user: string;
+  addReply: (text: string, parentId: string, user: string) => void;
   onReplySent: () => void;
 }
 
 const ReplyForm: React.FC<ReplyFormProps> = ({
   parentId,
+  user,
   addReply,
   onReplySent,
 }) => {
@@ -16,7 +18,7 @@ const ReplyForm: React.FC<ReplyFormProps> = ({
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    addReply(text, parentId);
+    addReply(text, parentId, user);
     setText("");
     onReplySent();
   };

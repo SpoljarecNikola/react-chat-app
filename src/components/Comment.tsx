@@ -4,7 +4,8 @@ import ReplyForm from "./ReplyForm"; // Osigurajte da je putanja ispravna
 
 interface CommentProps {
   comment: Comment;
-  addReply: (text: string, parentId: string) => void;
+  addReply: (text: string, parentId: string, user: string) => void;
+  user: string;
 }
 
 const CommentComponent: React.FC<CommentProps> = ({ comment, addReply }) => {
@@ -55,6 +56,7 @@ const CommentComponent: React.FC<CommentProps> = ({ comment, addReply }) => {
         {showReplyForm && (
           <ReplyForm
             parentId={comment.id}
+            user={comment.author.name}
             addReply={addReply}
             onReplySent={() => setShowReplyForm(false)}
           />
@@ -66,6 +68,7 @@ const CommentComponent: React.FC<CommentProps> = ({ comment, addReply }) => {
                 key={reply.id}
                 comment={reply}
                 addReply={addReply}
+                user={reply.author.name}
               />
             ))}
         </div>
