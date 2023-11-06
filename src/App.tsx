@@ -46,7 +46,7 @@ const App: React.FC = () => {
     return <div>Error fetching messages</div>;
   }
 
-  const addReply = (text: string, parentId: string, user: string) => {
+  const addReply = (text: string, parentId: string) => {
     setComments((currentComments) => {
       const addReplyToComment = (
         comments: Comment[],
@@ -102,7 +102,7 @@ const App: React.FC = () => {
               <ReplyForm
                 parentId=""
                 user={user}
-                addReply={(text, parentId) => {
+                addReply={(text) => {
                   const newComment: Comment = {
                     id: uuidv4(),
                     author: {
