@@ -33,6 +33,12 @@ cd react-chat-app
 npm install
 ```
 
+### Split the terminal and start mock server:
+
+```bash
+npm run mocks
+```
+
 ### Run the development server:
 
 ```bash
