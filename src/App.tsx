@@ -63,7 +63,7 @@ const App: React.FC = () => {
 
   // Render the comments and the form to add new comments at the same level
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 bg-gray-100 rounded-lg">
       {comments.map(comment => (
         <CommentComponent key={comment.id} comment={comment} addReply={addReply} />
       ))}
