@@ -55,6 +55,17 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.reply-line {
+  content: "";
+  display: block;
+  width: 2px; /* Width of the vertical line */
+  height: 100%; /* Full height of the parent container */
+  background-color: #cbd5e1; /* Color of the line */
+  position: absolute;
+  left: 15px; /* Adjust based on your spacing */
+  top: 0;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

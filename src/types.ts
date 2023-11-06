@@ -3,8 +3,8 @@ export interface Comment {
   author: {
     name: string;
     picture: string;
-  }
+  };
   text: string;
   timestamp: Date;
-  replies?: Comment[];
+  replies: Comment[];
 }
