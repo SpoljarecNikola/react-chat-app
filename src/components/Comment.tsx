@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Comment } from "../types";
-import ReplyForm from "./ReplyForm"; // Osigurajte da je putanja ispravna
+import ReplyForm from "./ReplyForm";
 
 interface CommentProps {
   comment: Comment;
@@ -8,7 +8,7 @@ interface CommentProps {
   user: string;
 }
 
-const CommentComponent: React.FC<CommentProps> = ({ comment, addReply }) => {
+const CommentComponent = ({ comment, addReply }: CommentProps) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
 
   const handleReplyClick = () => {
@@ -78,7 +78,3 @@ const CommentComponent: React.FC<CommentProps> = ({ comment, addReply }) => {
 };
 
 export default CommentComponent;
-
-{
-  /* <ReplyForm parentId={comment.id} addReply={addReply} onReplySent={() => setShowReplyForm(false)}/> */
-}

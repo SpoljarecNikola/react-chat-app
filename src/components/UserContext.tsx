@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
 interface UserContextType {
   currentUser: string;
@@ -9,16 +9,14 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | null>(null);
 
 interface UserProviderProps {
-  children: ReactNode; // Ovo definira tip za 'children'
+  children: ReactNode;
 }
 
-export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+export const UserProvider = ({ children }: UserProviderProps) => {
   const [currentUser, setCurrentUser] = useState<string>("");
 
   const login = (userName: string) => {
-    // Ovdje mijenjamo 'String' u 'string'
     setCurrentUser(userName);
-    // Trebalo bi se ispisati kada se pozove funkcija login
   };
 
   const logout = () => {
@@ -31,6 +29,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     </UserContext.Provider>
   );
 };
+
+export default UserProvider;
 
 export const useCurrentUser = () => {
   const context = useContext(UserContext);

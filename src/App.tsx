@@ -5,8 +5,9 @@ import { Comment } from "./types";
 import { v4 as uuidv4 } from "uuid";
 import LogoutButton from "./components/Logout";
 import { useQuery } from "react-query";
-import { Login } from "./components/Login";
-import { useCurrentUser, UserProvider } from "./components/UserContext";
+import Login from "./components/Login";
+import { useCurrentUser } from "./components/UserContext";
+import UserProvider from "./components/UserContext";
 
 const fetchMessages = async () => {
   const response = await fetch("http://localhost:3100/api/messages");
@@ -20,26 +21,18 @@ const App: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [user, setUser] = useState<string | null>(null);
 
-  // const handleLogin = (username: string) => {
-  //   setUser(username); // Postavljanje korisničkog imena nakon prijave
-  // };
-  // const handleLogout = () => {
-  //   // Ovdje resetirate korisničko ime, što efektivno "odjavljuje" korisnika
-  //   setUser("");
-  // };
+  const { currentUser, login, logout } = useCurrentUser();
 
-  const { currentUser, login, logout } = useCurrentUser(); // Ovdje dobivate trenutnog korisnika i funkcije iz konteksta
+  const { data, isLoading, isError } = useQuery("messages", fetchMessages);
 
   const handleLogin = (username: string) => {
-    login(username); // Ovo će postaviti trenutnog korisnika unutar konteksta
+    login(username);
     setUser(username);
   };
   const handleLogout = () => {
     setUser("");
-    logout(); // Ovo će "odjaviti" korisnika kroz kontekst
+    logout();
   };
-
-  const { data, isLoading, isError } = useQuery("messages", fetchMessages);
 
   useEffect(() => {
     setComments(data);
@@ -66,7 +59,7 @@ const App: React.FC = () => {
               id: uuidv4(),
               author: {
                 name: currentUser,
-                picture: "/src/assets/react.svg", // Putanja do slike vašeg default avatara
+                picture: "/src/assets/react.svg",
               },
               text,
               timestamp: new Date(),
@@ -90,7 +83,6 @@ const App: React.FC = () => {
     });
   };
 
-  // Render the comments and the form to add new comments at the same level
   return (
     <UserProvider>
       <div>
@@ -115,7 +107,7 @@ const App: React.FC = () => {
                     id: uuidv4(),
                     author: {
                       name: user,
-                      picture: "/src/assets/react.svg", // Putanja do slike vašeg default avatara
+                      picture: "/src/assets/react.svg",
                     },
                     text,
                     timestamp: new Date(),

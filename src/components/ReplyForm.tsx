@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import arrowSrc from "../assets/arrow.svg";
 
 interface ReplyFormProps {
   parentId: string;
@@ -8,12 +7,12 @@ interface ReplyFormProps {
   onReplySent: () => void;
 }
 
-const ReplyForm: React.FC<ReplyFormProps> = ({
+const ReplyForm = ({
   parentId,
   user,
   addReply,
   onReplySent,
-}) => {
+}: ReplyFormProps) => {
   const [text, setText] = useState("");
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -24,20 +23,6 @@ const ReplyForm: React.FC<ReplyFormProps> = ({
   };
 
   return (
-    // <form onSubmit={handleSubmit} className="mt-4">
-    //   <textarea
-    //     className="w-full p-2 text-sm border rounded-md"
-    //     placeholder="Write your reply..."
-    //     value={text}
-    //     onChange={(e) => setText(e.target.value)}
-    //   />
-    //   <button
-    //     type="submit"
-    //     className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
-    //   >
-    //     Submit
-    //   </button>
-    // </form>
     <form
       onSubmit={handleSubmit}
       className="flex items-center space-x-2 bg-white p-2 rounded-lg"

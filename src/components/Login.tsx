@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import { useContext } from "react";
-import { UserProvider } from "./UserContext";
 
 interface LoginProps {
   onLogin: (username: string) => void;
 }
-// Komponenta za prijavu
-export const Login: React.FC<LoginProps> = ({ onLogin }) => {
+const Login = ({ onLogin }: LoginProps) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -63,3 +60,5 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
     </form>
   );
 };
+
+export default Login;
