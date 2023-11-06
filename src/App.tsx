@@ -39,19 +39,19 @@ const App: React.FC = () => {
     logout(); // Ovo će "odjaviti" korisnika kroz kontekst
   };
 
-  //
+  const { data, isLoading, isError } = useQuery("messages", fetchMessages);
 
-  // useEffect(() => {
-  //     setComments(data);
-  // }, [data]);
+  useEffect(() => {
+    setComments(data);
+  }, [data]);
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-  // if (isError) {
-  //   return <div>Error fetching messages</div>;
-  // }
+  if (isError) {
+    return <div>Error fetching messages</div>;
+  }
 
   const addReply = (text: string, parentId: string, user: string) => {
     setComments((currentComments) => {
