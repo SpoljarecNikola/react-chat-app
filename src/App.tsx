@@ -59,7 +59,7 @@ const App: React.FC = () => {
               id: uuidv4(),
               author: {
                 name: currentUser,
-                picture: "/src/assets/react.svg",
+                picture: "/public/assets/react.svg",
               },
               text,
               timestamp: new Date(),
@@ -107,7 +107,7 @@ const App: React.FC = () => {
                     id: uuidv4(),
                     author: {
                       name: user,
-                      picture: "/src/assets/react.svg",
+                      picture: "/public/assets/react.svg",
                     },
                     text,
                     timestamp: new Date(),
