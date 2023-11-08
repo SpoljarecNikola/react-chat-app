@@ -17,7 +17,7 @@ const fetchMessages = async () => {
   return response.json();
 };
 
-const App: React.FC = () => {
+const App = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [user, setUser] = useState<string | null>(null);
 
